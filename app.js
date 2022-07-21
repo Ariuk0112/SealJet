@@ -23,7 +23,7 @@ app.use(
   })
 );
 
-app.use(express.static("./public"));
+app.use(express.static("./public/sealjet"));
 // access-control-allow-credentials: true
 // access-control-allow-headers: DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
 // access-control-allow-methods: PUT, GET, POST, DELETE, OPTIONS, HEAD

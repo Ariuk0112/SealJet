@@ -83,7 +83,9 @@ module.exports = {
   create_footer: asyncHandler(async (req, res, next) => {
     const file = req.files.url;
     let item = await Footer.create(req.body);
-    file.name = `/uploads/footer/photo_${item._id}${path.parse(file.name).ext}`;
+    file.name = `/sealjet/uploads/footer/photo_${item._id}${
+      path.parse(file.name).ext
+    }`;
     str = file.name.split("/").pop();
     file.mv(`${process.env.FOOTER_FILE_UPLOAD_PATH}/${str}`, (err) => {
       if (err) {
@@ -115,7 +117,7 @@ module.exports = {
     if (item) {
       if (req.files) {
         const file = req.files.url;
-        file.name = `/uploads/footer/photo_${req.params.id}${
+        file.name = `/sealjet/uploads/footer/photo_${req.params.id}${
           path.parse(file.name).ext
         }`;
         str = item.url.split("/").pop();
@@ -186,7 +188,9 @@ module.exports = {
   create_logo: asyncHandler(async (req, res, next) => {
     const file = req.files.img;
     let item = await Logo.create(req.body);
-    file.name = `/uploads/logo/photo_${item._id}${path.parse(file.name).ext}`;
+    file.name = `/sealjet/uploads/logo/photo_${item._id}${
+      path.parse(file.name).ext
+    }`;
     str = file.name.split("/").pop();
     file.mv(`${process.env.LOGO_FILE_UPLOAD_PATH}/${str}`, (err) => {
       if (err) {
@@ -218,7 +222,7 @@ module.exports = {
     if (item) {
       if (req.files) {
         const file = req.files.img;
-        file.name = `/uploads/logo/photo_${req.params.id}${
+        file.name = `/sealjet/uploads/logo/photo_${req.params.id}${
           path.parse(file.name).ext
         }`;
         str = item.img.split("/").pop();
@@ -291,7 +295,9 @@ module.exports = {
     const file = req.files.url1;
     const img = req.files.url2;
     let item = await Main.create(req.body);
-    file.name = `/uploads/main/photo_${item._id}_0${path.parse(file.name).ext}`;
+    file.name = `/sealjet/uploads/main/photo_${item._id}_0${
+      path.parse(file.name).ext
+    }`;
     str = file.name.split("/").pop();
     file.mv(`${process.env.MAIN_FILE_UPLOAD_PATH}/${str}`, (err) => {
       if (err) {
@@ -301,7 +307,9 @@ module.exports = {
         );
       }
     });
-    img.name = `/uploads/main/photo_${item._id}_1${path.parse(img.name).ext}`;
+    img.name = `/sealjet/uploads/main/photo_${item._id}_1${
+      path.parse(img.name).ext
+    }`;
     str1 = img.name.split("/").pop();
     img.mv(`${process.env.MAIN_FILE_UPLOAD_PATH}/${str1}`, (err) => {
       if (err) {
@@ -436,7 +444,9 @@ module.exports = {
     const img = req.files.url;
     let item = await News.create(req.body);
 
-    img.name = `/uploads/news/photo_${item._id}${path.parse(img.name).ext}`;
+    img.name = `/sealjet/uploads/news/photo_${item._id}${
+      path.parse(img.name).ext
+    }`;
     str1 = img.name.split("/").pop();
     img.mv(`${process.env.NEWS_FILE_UPLOAD_PATH}/${str1}`, (err) => {
       if (err) {
@@ -474,7 +484,7 @@ module.exports = {
     if (item) {
       if (req.files) {
         const file = req.files.url;
-        file.name = `/uploads/news/photo_${req.params.id}${
+        file.name = `/sealjet/uploads/news/photo_${req.params.id}${
           path.parse(file.name).ext
         }`;
         str = item.url.split("/").pop();
@@ -547,7 +557,9 @@ module.exports = {
     const img = req.files.url;
     let item = await Product.create(req.body);
 
-    img.name = `/uploads/product/photo_${item._id}${path.parse(img.name).ext}`;
+    img.name = `/sealjet/uploads/product/photo_${item._id}${
+      path.parse(img.name).ext
+    }`;
     str1 = img.name.split("/").pop();
     img.mv(`${process.env.PRODUCT_FILE_UPLOAD_PATH}/${str1}`, (err) => {
       if (err) {
@@ -578,11 +590,31 @@ module.exports = {
       });
     } else {
       res.status(200).json({
-        success: false,
+        success: true,
         count: item.length,
         data: item,
       });
     }
+  }),
+  delete_product: asyncHandler(async (req, res, next) => {
+    const product = await Product.findByIdAndRemove(req.params.id);
+    if (!product) {
+      throw new myError(`${req.params.id} тай зураг байхгүй байна`, 400);
+    }
+
+    str = product.url.split("/").pop();
+    fs.unlink(`${process.env.PRODUCT_FILE_UPLOAD_PATH}/${str}`, (err) => {
+      if (err) {
+        throw new myError(
+          "Файл устгах явцад алдаа гарлаа :" + err.message,
+          400
+        );
+      }
+    });
+    res.status(200).json({
+      success: true,
+      data: product,
+    });
   }),
   insert_temp_product: asyncHandler(async (req, res, next) => {
     let item = await Product.findById(req.params.id);
@@ -781,7 +813,7 @@ module.exports = {
   create_material: asyncHandler(async (req, res, next) => {
     const file = req.files.url;
     let item = await Material.create(req.body);
-    file.name = `/uploads/material/photo_${item._id}${
+    file.name = `/sealjet/uploads/material/photo_${item._id}${
       path.parse(file.name).ext
     }`;
     str = file.name.split("/").pop();
@@ -815,7 +847,7 @@ module.exports = {
     if (item) {
       if (req.files) {
         const file = req.files.url;
-        file.name = `/uploads/material/photo_${req.params.id}${
+        file.name = `/sealjet/uploads/material/photo_${req.params.id}${
           path.parse(file.name).ext
         }`;
         str = item.url.split("/").pop();

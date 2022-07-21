@@ -45,6 +45,7 @@ const {
   show_order,
   create_order,
   delete_order,
+  delete_product,
 } = require("./controller");
 
 router.get("/category", show_category);
@@ -69,6 +70,7 @@ router.delete("/main/:id", auth, delete_main);
 
 router.get("/product", show_product);
 router.post("/product", auth, create_product);
+router.delete("/product/:id", auth, delete_product);
 
 router.post("/productTemp/:id", auth, insert_temp_product);
 router.get("/productTemp/:id", show_temp_product);
