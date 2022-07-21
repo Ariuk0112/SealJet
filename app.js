@@ -62,9 +62,9 @@ app.use(bodyParser.text({ type: "*/xml" }));
 app.use(express.static("public"));
 app.use(fileupload());
 // main routes
-app.use("/api/auth", require("./api/auth/router"));
+app.use("/api/sealjet/auth", require("./api/auth/router"));
 
-app.use("/", require("./api/sealjet/router"));
+app.use("/api/sealjet", require("./api/sealjet/router"));
 // app.use("/api", require("./api/MisheelAdmin/router"));
 app.use("/api/client", require("./api/client/router"));
 

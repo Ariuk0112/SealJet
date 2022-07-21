@@ -5,6 +5,11 @@ const order = new mongoose.Schema(
     phone: String,
     email: String,
     product: String,
+    createdDate: {
+      type: Date,
+      default: Date.now(),
+    },
+    status: String,
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

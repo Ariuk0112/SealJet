@@ -82,6 +82,7 @@ module.exports = {
     return res.json({
       success: true,
       user_id: item._id,
+      username: req.body.username,
       role: item.role,
       accessToken: accessToken,
     });
