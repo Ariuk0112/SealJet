@@ -76,19 +76,19 @@ router.delete("/product/:id", auth, delete_product);
 
 router.post("/productTemp/:id", auth, insert_temp_product);
 router.get("/productTemp/:id", show_temp_product);
-router.delete("/productTemp", auth, delete_temp_product);
+router.delete("/productTemp/:id/:id1", auth, delete_temp_product);
 
 router.post("/productSpeed/:id", auth, insert_speed_product);
 router.get("/productSpeed/:id", show_speed_product);
-router.delete("/productSpeed", auth, delete_speed_product);
+router.delete("/productSpeed/:id/:id1", auth, delete_speed_product);
 
 router.post("/productPressure/:id", auth, insert_pressure_product);
 router.get("/productPressure/:id", show_pressure_product);
-router.delete("/productPressure", auth, delete_pressure_product);
+router.delete("/productPressure/:id/:id1", auth, delete_pressure_product);
 
 router.post("/productMaterial/:id", auth, insert_material_product);
 router.get("/productMaterial/:id", show_material_product);
-router.delete("/productMaterial", auth, delete_material_product);
+router.delete("/productMaterial/:id/:id1", auth, delete_material_product);
 
 router.get("/news", show_all_news);
 router.get("/news/:id", show_one_news);

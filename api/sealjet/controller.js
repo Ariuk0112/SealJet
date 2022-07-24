@@ -687,6 +687,7 @@ module.exports = {
   }),
   show_temp_product: asyncHandler(async (req, res, next) => {
     let query;
+    console.log(req.params.id, req.params.temp);
     query = Product.findById(req.params.id, { temp: 1, _id: 1 });
     const item = await query;
 
@@ -705,7 +706,7 @@ module.exports = {
     }
   }),
   delete_temp_product: asyncHandler(async (req, res, next) => {
-    let item = await Product.findById(req.body.productId);
+    let item = await Product.findById(req.params.id);
     if (isEmpty(item)) {
       throw new myError(
         `${req.body.productId} id тай бараа байхгүй байна`,
@@ -713,8 +714,8 @@ module.exports = {
       );
     }
     item = await Product.updateOne(
-      { _id: req.body.productId },
-      { $pull: { temp: { _id: req.body.arrayId } } }
+      { _id: req.params.id },
+      { $pull: { temp: { _id: req.params.id1 } } }
     );
     res.status(200).json({
       success: true,
@@ -756,13 +757,13 @@ module.exports = {
     }
   }),
   delete_speed_product: asyncHandler(async (req, res, next) => {
-    let item = await Product.findById(req.body.productId);
+    let item = await Product.findById(req.params.id);
     if (isEmpty(item)) {
-      throw new myError(`${req.body.id1} id тай бараа байхгүй байна`, 400);
+      throw new myError(`${req.params.id} id тай бараа байхгүй байна`, 400);
     }
     item = await Product.updateOne(
-      { _id: req.body.productId },
-      { $pull: { speed: { _id: req.body.arrayId } } }
+      { _id: req.params.id },
+      { $pull: { speed: { _id: req.params.id1 } } }
     );
     res.status(200).json({
       success: true,
@@ -803,13 +804,13 @@ module.exports = {
     }
   }),
   delete_pressure_product: asyncHandler(async (req, res, next) => {
-    let item = await Product.findById(req.body.productId);
+    let item = await Product.findById(req.params.id);
     if (isEmpty(item)) {
-      throw new myError(`${req.body.id1} id тай бараа байхгүй байна`, 400);
+      throw new myError(`${req.params.id} id тай бараа байхгүй байна`, 400);
     }
     item = await Product.updateOne(
-      { _id: req.body.productId },
-      { $pull: { pressure: { _id: req.body.arrayId } } }
+      { _id: req.params.id },
+      { $pull: { pressure: { _id: req.params.id1 } } }
     );
     res.status(200).json({
       success: true,
@@ -851,13 +852,13 @@ module.exports = {
     }
   }),
   delete_material_product: asyncHandler(async (req, res, next) => {
-    let item = await Product.findById(req.body.productId);
+    let item = await Product.findById(req.params.id);
     if (isEmpty(item)) {
-      throw new myError(`${req.body.id1} id тай бараа байхгүй байна`, 400);
+      throw new myError(`${req.params.id} id тай бараа байхгүй байна`, 400);
     }
     item = await Product.updateOne(
-      { _id: req.body.productId },
-      { $pull: { material: { _id: req.body.arrayId } } }
+      { _id: req.params.id },
+      { $pull: { material: { _id: req.params.id1 } } }
     );
     res.status(200).json({
       success: true,
