@@ -577,6 +577,61 @@ module.exports = {
       data: item,
     });
   }),
+  update_product: asyncHandler(async (req, res, next) => {
+    let product;
+    const item = await Product.findById(req.params.id);
+    let data = req.body;
+    if (item) {
+      if (req.files) {
+        const file = req.files.url;
+        file.name = `/sealjet/uploads/product/photo_${req.params.id}${
+          path.parse(file.name).ext
+        }`;
+        str = item.url.split("/").pop();
+        req.body.url = file.name;
+        fs.unlink(`${process.env.PRODUCT_FILE_UPLOAD_PATH}/${str}`, (err) => {
+          if (err) {
+            throw new myError(
+              "Файл устгах явцад алдаа гарлаа :" + err.message,
+              400
+            );
+          }
+        });
+        str1 = file.name.split("/").pop();
+        file.mv(`${process.env.PRODUCT_FILE_UPLOAD_PATH}/${str1}`, (err) => {
+          if (err) {
+            throw new myError(
+              "Файл хуулах явцад алдаа гарлаа :" + err.message,
+              400
+            );
+          }
+        });
+
+        product = await Product.findByIdAndUpdate(item._id, data, {
+          new: true,
+          runValidators: true,
+        });
+        res.status(200).json({
+          success: true,
+          data: product,
+        });
+      } else {
+        product = await Product.findByIdAndUpdate(item._id, data, {
+          new: true,
+          runValidators: true,
+        });
+        res.status(200).json({
+          success: true,
+          data: product,
+        });
+      }
+    } else {
+      res.status(200).json({
+        success: false,
+        data: item,
+      });
+    }
+  }),
   show_product: asyncHandler(async (req, res, next) => {
     let query;
     query = Product.find();
