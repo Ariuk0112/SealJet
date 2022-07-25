@@ -47,6 +47,8 @@ const {
   delete_order,
   delete_product,
   update_product,
+  show_one_product,
+  show_one_material,
 } = require("./controller");
 
 router.get("/category", show_category);
@@ -70,6 +72,7 @@ router.put("/main/:id", auth, update_main);
 router.delete("/main/:id", auth, delete_main);
 
 router.get("/product", show_product);
+router.get("/product/:id", show_one_product);
 router.post("/product", auth, create_product);
 router.put("/product/:id", auth, update_product);
 router.delete("/product/:id", auth, delete_product);
@@ -102,6 +105,7 @@ router.post("/order", create_order);
 router.delete("/order/:id", auth, delete_order);
 
 router.get("/material", show_material);
+router.get("/material/:id", show_one_material);
 router.post("/material", auth, create_material);
 router.put("/material/:id", auth, update_material);
 router.delete("/material/:id", auth, delete_material);

@@ -651,6 +651,25 @@ module.exports = {
       });
     }
   }),
+  show_one_product: asyncHandler(async (req, res, next) => {
+    let query;
+    query = Product.findById(req.params.id);
+    const item = await query;
+
+    if (!item) {
+      res.status(200).json({
+        success: true,
+        count: item.length,
+        data: "",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        count: item.length,
+        data: item,
+      });
+    }
+  }),
   delete_product: asyncHandler(async (req, res, next) => {
     const product = await Product.findByIdAndRemove(req.params.id);
     if (!product) {
@@ -890,6 +909,13 @@ module.exports = {
   }),
   show_material: asyncHandler(async (req, res, next) => {
     const item = await Material.find();
+    res.status(200).json({
+      success: true,
+      data: item,
+    });
+  }),
+  show_one_material: asyncHandler(async (req, res, next) => {
+    const item = await Material.findById(req.params.id);
     res.status(200).json({
       success: true,
       data: item,
